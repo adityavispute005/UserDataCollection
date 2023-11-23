@@ -317,7 +317,8 @@ function onSubmit(e) {
     const listItem = document.createElement('li');
 
     // Add text node with input values
-    listItem.appendChild(document.createTextNode(`${userNameInput.value}: ${emailInput.value}`));
+    const userDetails = `${userNameInput.value}: ${emailInput.value}`;
+    listItem.appendChild(document.createTextNode(userDetails));
 
     // Append to ul
     userListElement.appendChild(listItem);
@@ -325,5 +326,19 @@ function onSubmit(e) {
     // Clear fields
     userNameInput.value = '';
     emailInput.value = '';
+
+    // Store user details in local storage
+    storeUserDetails(userDetails);
   }
+}
+
+// Function to store user details in local storage
+function storeUserDetails(userDetails) {
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+
+  // Add the new user details to the array
+  users.push(userDetails);
+
+  // Store the updated array back in local storage
+  localStorage.setItem('users', JSON.stringify(users));
 }
