@@ -313,11 +313,17 @@ function onSubmit(e) {
     // Remove error after 3 seconds
     setTimeout(() => message.remove(), 3000);
   } else {
+    // Create user object
+    const user = {
+      name: userNameInput.value,
+      email: emailInput.value,
+    };
+
     // Create new list item with user
     const listItem = document.createElement('li');
 
-    // Add text node with input values
-    const userDetails = `${userNameInput.value}: ${emailInput.value}`;
+    // Add text node with formatted user details
+    const userDetails = `${user.name}: ${user.email}`;
     listItem.appendChild(document.createTextNode(userDetails));
 
     // Append to ul
@@ -327,17 +333,17 @@ function onSubmit(e) {
     userNameInput.value = '';
     emailInput.value = '';
 
-    // Store user details in local storage
-    storeUserDetails(userDetails);
+    // Store user details as an object in local storage
+    storeUserDetails(user);
   }
 }
 
 // Function to store user details in local storage
-function storeUserDetails(userDetails) {
+function storeUserDetails(user) {
   let users = JSON.parse(localStorage.getItem('users')) || [];
 
-  // Add the new user details to the array
-  users.push(userDetails);
+  // Add the new user object to the array
+  users.push(user);
 
   // Store the updated array back in local storage
   localStorage.setItem('users', JSON.stringify(users));
